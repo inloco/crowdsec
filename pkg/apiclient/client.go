@@ -130,6 +130,10 @@ func RegisterClient(config *Config, client *http.Client) (*ApiClient, error) {
 			}
 			http.DefaultTransport.(*http.Transport).TLSClientConfig = &tlsconfig
 		}
+	} else {
+		if client.Transport == nil && transport != nil {
+			client.Transport = transport
+		}
 	}
 
 	c := &ApiClient{client: client, BaseURL: baseUrl, UserAgent: config.UserAgent, URLPrefix: config.VersionPrefix}
