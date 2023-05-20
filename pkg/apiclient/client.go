@@ -151,16 +151,23 @@ func RegisterClient(config *Config, client *http.Client) (*ApiClient, error) {
 }
 
 func CreateTransport(url *url.URL) (*http.Transport, *url.URL) {
-	if strings.HasPrefix(url.String(), "/") {
-		url.RawPath = "http://unix/"
+	urlString := url.String()
+	if strings.HasPrefix(urlString, "/") {
+		ToUnixSocketUrl(url)
 		return &http.Transport{
 			DialContext: func(_ context.Context, _, _ string) (net.Conn, error) {
-				return net.Dial("unix", url.String())
+				return net.Dial("unix", strings.TrimSuffix(urlString, "/"))
 			},
 		}, url
 	} else {
 		return nil, url
 	}
+}
+
+func ToUnixSocketUrl(url *url.URL) {
+	url.Path = "/"
+	url.Host = "unix"
+	url.Scheme = "http"
 }
 
 type Response struct {

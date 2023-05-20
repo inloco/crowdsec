@@ -176,9 +176,14 @@ func (t *JWTTransport) refreshJwtToken() error {
 		return errors.Wrap(err, "could not create request")
 	}
 	req.Header.Add("Content-Type", "application/json")
+
+	transport := t.Transport
+	if transport == nil {
+		transport = http.DefaultTransport
+	}
 	client := &http.Client{
 		Transport: &retryRoundTripper{
-			next:             http.DefaultTransport,
+			next:             transport,
 			maxAttempts:      5,
 			withBackOff:      true,
 			retryStatusCodes: []int{http.StatusTooManyRequests, http.StatusServiceUnavailable, http.StatusGatewayTimeout, http.StatusInternalServerError},
