@@ -99,6 +99,9 @@ func TestNewClientOk(t *testing.T) {
 }
 
 func TestNewClientOk_UnixSocket(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("skipping on windows")
+	}
 	tmpDir := t.TempDir()
 	socket := path.Join(tmpDir, "socket")
 
@@ -192,6 +195,9 @@ func TestNewDefaultClient(t *testing.T) {
 }
 
 func TestNewDefaultClient_UnixSocket(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("skipping on windows")
+	}
 	tmpDir := t.TempDir()
 	socket := path.Join(tmpDir, "socket")
 	mux, urlx, teardown := setupUnixSocketWithPrefix(socket, "v1")
@@ -262,6 +268,9 @@ func TestNewClientRegisterOK(t *testing.T) {
 }
 
 func TestNewClientRegisterOK_UnixSocket(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("skipping on windows")
+	}
 	log.SetLevel(log.TraceLevel)
 	tmpDir := t.TempDir()
 	socket := path.Join(tmpDir, "socket")
