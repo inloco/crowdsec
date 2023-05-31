@@ -18,6 +18,7 @@ import (
 	"github.com/google/uuid"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	"golang.org/x/exp/slices"
 	"gopkg.in/yaml.v2"
 
 	"github.com/crowdsecurity/machineid"
@@ -344,7 +345,7 @@ func NewMachinesDeleteCmd() *cobra.Command {
 			}
 			ret := make([]string, 0)
 			for _, machine := range machines {
-				if strings.Contains(machine.MachineId, toComplete) && !inSlice(machine.MachineId, args) {
+				if strings.Contains(machine.MachineId, toComplete) && !slices.Contains(args, machine.MachineId) {
 					ret = append(ret, machine.MachineId)
 				}
 			}
