@@ -115,7 +115,7 @@ func TestNewClientOk_UnixSocket(t *testing.T) {
 	client, err := NewClient(&Config{
 		MachineID:     "test_login",
 		Password:      "test_password",
-		UserAgent:     fmt.Sprintf("crowdsec/%s", cwversion.VersionStr()),
+		UserAgent:     fmt.Sprintf("crowdsec/%s", version.String()),
 		URL:           apiURL,
 		VersionPrefix: "v1",
 	})
@@ -292,7 +292,7 @@ func TestNewClientRegisterOK_UnixSocket(t *testing.T) {
 	client, err := RegisterClient(&Config{
 		MachineID:     "test_login",
 		Password:      "test_password",
-		UserAgent:     fmt.Sprintf("crowdsec/%s", cwversion.VersionStr()),
+		UserAgent:     fmt.Sprintf("crowdsec/%s", version.String()),
 		URL:           apiURL,
 		VersionPrefix: "v1",
 	}, &http.Client{})
