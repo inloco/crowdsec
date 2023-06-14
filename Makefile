@@ -62,7 +62,7 @@ endif
 #--------------------------------------
 
 .PHONY: build
-build: pre-build goversion crowdsec cscli plugins
+build: pre-build goversion crowdsec cscli plugins  ## Build crowdsec, cscli and plugins
 
 .PHONY: pre-build
 pre-build:
@@ -130,7 +130,7 @@ go-acc: testenv goversion
 		sed 's/ *coverage:.*of statements in.*//'
 
 .PHONY: localstack
-localstack:
+localstack: ## Run localstack for testing
 	docker-compose -f test/localstack/docker-compose.yml up
 
 .PHONY: localstack-stop
@@ -138,7 +138,7 @@ localstack-stop:
 	docker-compose -f test/localstack/docker-compose.yml down
 
 .PHONY: vendor
-vendor:
+vendor: ## Vendor dependencies
 	@echo "Vendoring dependencies"
 	@$(GOCMD) mod vendor
 	@$(foreach plugin,$(PLUGINS), \
@@ -195,3 +195,4 @@ include test/bats.mk
 endif
 
 include mk/goversion.mk
+include mk/help.mk
