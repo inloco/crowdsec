@@ -29,6 +29,17 @@ teardown() {
 
 #----------
 
+@test "detect available context" {
+    rune -0 cscli lapi context detect -a
+    rune -0 yq -o json <(output)
+    assert_json '{"Acquisition":["evt.Line.Module","evt.Line.Raw","evt.Line.Src"]}'
+
+    rune -0 cscli parsers install crowdsecurity/dateparse-enrich
+    rune -0 cscli lapi context detect crowdsecurity/dateparse-enrich
+    rune -0 yq -o json '.crowdsecurity/dateparse-enrich' <(output)
+    assert_json '["evt.MarshaledTime","evt.Meta.timestamp"]'
+}
+
 @test "attempt to load from default context file, ignore if missing" {
     rune -0 rm -f "$CONTEXT_YAML"
     rune -0 "$CROWDSEC" -t --trace
