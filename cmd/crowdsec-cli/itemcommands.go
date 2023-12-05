@@ -163,6 +163,38 @@ cscli collections list crowdsecurity/http-cve crowdsecurity/iptables
 List only enabled collections unless "-a" or names are specified.`,
 		},
 	},
+	"contexts": {
+		name:      cwhub.CONTEXTS,
+		singular:  "context",
+		oneOrMore: "context(s)",
+		help: cmdHelp{
+			example: `cscli contexts list -a
+cscli contexts install crowdsecurity/yyy crowdsecurity/zzz
+cscli contexts inspect crowdsecurity/yyy crowdsecurity/zzz
+cscli contexts upgrade crowdsecurity/yyy crowdsecurity/zzz
+cscli contexts remove crowdsecurity/yyy crowdsecurity/zzz
+`,
+		},
+		installHelp: cmdHelp{
+			example: `cscli contexts install crowdsecurity/yyy crowdsecurity/zzz`,
+		},
+		removeHelp: cmdHelp{
+			example: `cscli contexts remove crowdsecurity/yyy crowdsecurity/zzz`,
+		},
+		upgradeHelp: cmdHelp{
+			example: `cscli contexts upgrade crowdsecurity/yyy crowdsecurity/zzz`,
+		},
+		inspectHelp: cmdHelp{
+			example: `cscli contexts inspect crowdsecurity/yyy crowdsecurity/zzz`,
+		},
+		listHelp: cmdHelp{
+			example: `cscli contexts list
+cscli contexts list -a
+cscli contexts list crowdsecurity/yyy crowdsecurity/zzz
+
+List only enabled contexts unless "-a" or names are specified.`,
+		},
+	},
 }
 
 func NewItemsCmd(typeName string) *cobra.Command {
